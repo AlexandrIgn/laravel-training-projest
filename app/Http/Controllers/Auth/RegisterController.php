@@ -14,7 +14,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     private $service;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
         try {
             $this->service->verify($user->id);
             return redirect()->route('login')
-                ->with('success', 'Your e-mail is verified. You can now login');
+                ->with('success', 'Your e-mail is verified. You can now login.');
         } catch (\DomainException $e) {
             return redirect()->route('login')->with('error', $e->getMessage());
         }

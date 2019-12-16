@@ -28,12 +28,4 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function authelllntfficated(Request $request, $user)
-    {
-        if ($user->status !== User::STATUS_ACTIVE) {
-            $this->guard()->logout();
-            return back()->with('error', 'You need to confirm you account. Please check youe email.');
-        }
-        return redirect()->intended($this->redirectPath());
-    }
 }

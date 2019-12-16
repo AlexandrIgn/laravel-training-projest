@@ -29,6 +29,6 @@ class CreateAdvertCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('advert_categories');
-        $table->dropNestedSet();
+
     }
 }
