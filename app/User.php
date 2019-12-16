@@ -17,7 +17,7 @@ class User extends Authenticatable
     public const ROLE_ADMIN = 'admin';
 
     protected $fillable = [
-        'name', 'email', 'password', 'status', 'role',
+        'name', 'last_name', 'email', 'password', 'status', 'role',
     ];
 
 
@@ -29,10 +29,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function new($name, $email)
+    public static function new($name, $lastName, $email)
     {
         return static::create([
             'name' => $name,
+            'lastName' => $lastName,
             'email' => $email,
             'password' => bcrypt(Str::random()),
             'status' => self::STATUS_ACTIVE,
@@ -40,10 +41,11 @@ class User extends Authenticatable
         ]);
     }
 
-    public static function register(string $name, string $email, string $password): self
+    public static function register(string $name, string $lastName, string $email, string $password): self
     {
         return static::create([
             'name' => $name,
+            'lastName' => $lastName,
             'email' => $email,
             'password' => bcrypt($password),
             'verify_token' => Str::uuid(),
