@@ -125,3 +125,20 @@ Breadcrumbs::register('admin.adverts.categories.attributes.edit', function ($tra
     $trail->parent('admin.adverts.categories.attributes.show', $category, $attribute);
     $trail->push('Edit', route('admin.adverts.categories.attributes.edit', [$category, $attribute]));
 });
+
+// Cabinet
+
+Breadcrumbs::register('cabinet.home', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Cabinet', route('cabinet.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.home', function ($trail) {
+    $trail->parent('cabinet.home');
+    $trail->push('Profile', route('cabinet.profile.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.edit', function ($trail) {
+    $trail->parent('cabinet.profile.home');
+    $trail->push('Edit', route('cabinet.profile.edit'));
+});

@@ -26,7 +26,6 @@ class RegisterService
     {
         $user = User::register(
             $request['name'],
-            $request['lastName'],
             $request['email'],
             $request['password']
         );
