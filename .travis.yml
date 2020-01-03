@@ -10,7 +10,7 @@ before_script:
   - php artisan key:generate
   - php artisan config:clear
   - php artisan config:cache
-   - php artisan migrate
+  - php artisan migrate
 install:
   - make install
 script: make lint test
