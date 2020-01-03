@@ -1,0 +1,11 @@
+language: php
+php:
+  - '7.2'
+before_script:
+  - cp .env.travis .env
+
+  - composer self-update
+  - composer install --no-interaction  
+install:
+  - make install
+script: make lint test

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Region;
 
-
 class RegionController extends Controller
 {
 
@@ -60,8 +59,10 @@ class RegionController extends Controller
     public function update(UpdateRequest $request, Region $region)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:regions,name,' . $region->id . ',id,parent_id,' . $region->parent_id,
-            'slug' => 'required|string|max:255|unique:regions,slug,' . $region->id . ',id,parent_id,' . $region->parent_id,
+            'name' => 'required|string|max:255|unique:regions,name,'
+            . $region->id . ',id,parent_id,' . $region->parent_id,
+            'slug' => 'required|string|max:255|unique:regions,slug,'
+            . $region->id . ',id,parent_id,' . $region->parent_id,
         ]);
 
         $region->update([

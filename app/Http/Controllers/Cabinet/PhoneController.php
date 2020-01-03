@@ -12,19 +12,19 @@ use Carbon\Carbon;
 
 class PhoneController extends Controller
 {
-   /*private $sms;
+    private $sms;
 
     public function __construct(SmsSender $sms)
     {
         $this->sms = $sms;
-    }*/
+    }
 
     public function request()
     {
         $user = Auth::user();
         try {
             $token = $user->requestPhoneVerification(Carbon::now());
-            $this->sms-send($user->phone, 'Phone verification token: ' . $token);
+            $this->sms->send($user->phone, 'Phone verification token: ' . $token);
         } catch (\DomainException $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -63,7 +63,7 @@ class PhoneController extends Controller
             $user->disablePhoneAuth();
         } else {
             $user->enablePhoneAuth();
-        } 
+        }
             return redirect()->route('cabinet.profile.home');
     }
 }

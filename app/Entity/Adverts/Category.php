@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Entity\Adverts;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-use App\Attribute;
+use App\Entity\Adverts\Attribute;
 
 class Category extends Model
 {
@@ -26,7 +26,6 @@ class Category extends Model
     public function parentAttributes()
     {
         return $this->parent ? $this->parent->allAttributes() : [];
-
     }
 
     public function allAttributes()

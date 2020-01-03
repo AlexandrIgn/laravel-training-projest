@@ -10,6 +10,7 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
     use DatabaseMigrations;
+    
     /**
      * A basic test example.
      *
@@ -64,4 +65,3 @@ class LoginTest extends TestCase
         $this->assertAuthenticated();
     }
 }
-

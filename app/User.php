@@ -16,6 +16,8 @@ class User extends Authenticatable
     public const STATUS_ACTIVE = 'active';
     public const ROLE_USER = 'user';
     public const ROLE_ADMIN = 'admin';
+    public const ROLE_MODERATOR = 'moderator';
+
 
     protected $fillable = [
         'name', 'last_name', 'email', 'phone', 'password', 'verify_token', 'status', 'role',
@@ -31,6 +33,15 @@ class User extends Authenticatable
         'phone_verified' => 'boolean',
         'phone_verify_token_expire' => 'datetime',
     ];
+
+    public static function rolesList()
+    {
+        return [
+            User::ROLE_USER => 'User',
+            User::ROLE_ADMIN => 'Admin',
+            User::ROLE_MODERATOR => 'Moderator',
+        ];
+    }
 
     public static function new($name, $email)
     {
@@ -67,7 +78,7 @@ class User extends Authenticatable
 
     public function changeRole($role)
     {
-        if (!in_array($role, [self::ROLE_USER, self::ROLE_ADMIN, true])) {
+        if (!in_array(ucfirst($role), self::rolesList())) {
             throw new \InvalidArgumentException('Undedined role "' . $role . '"');
         }
         if ($this->role === $role) {
@@ -90,7 +101,7 @@ class User extends Authenticatable
         if (empty($this->phone)) {
             throw new \DomainException('Phone number is empty.');
         }
-        if (!empty($this->phone_verify_token) && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)) {
+        if (!$this->isEmtyVerifyToken() && $this->phone_verify_token_expire && $this->phone_verify_token_expire->gt($now)) {
             throw new \DomainException('Token is already requested.');
         }
         $this->phone_verified = false;
@@ -130,6 +141,11 @@ class User extends Authenticatable
         $this->saveOrFail();
     }
 
+    public function ismoderator()
+    {
+        return $this->role === self::ROLE_MODERATOR;
+    }
+
     public function isAdmin()
     {
         return $this->role === self::ROLE_ADMIN;
@@ -155,4 +171,8 @@ class User extends Authenticatable
         return (bool)$this->phone_auth;
     }
 
+    protected function isEmtyVerifyToken()
+    {
+        return empty($this->phone_verify_token);
+    }
 }

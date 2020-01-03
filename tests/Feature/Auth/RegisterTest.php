@@ -11,6 +11,7 @@ use Tests\TestCase;
 class RegisterTest extends TestCase
 {
     use DatabaseMigrations;
+    
     /**
      * A basic test example.
      *
@@ -56,21 +57,7 @@ class RegisterTest extends TestCase
             ->assertRedirect('/login')
             /*->assertSessionHas('success', 'Check your email and click on the link to verify.')*/;
     }
-/*
-    public function testWait(): void
-    {
-        $user = factory(User::class)->create(['status' => User::STATUS_WAIT]);
 
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'secret',
-        ]);
-
-        $response
-            ->assertStatus(302)
-            ->assertRedirect('/')
-            ->assertSessionHas('error', 'You need to confirm your account. Please check your email.');
-    }*/
     public function testActive(): void
     {
         $user = factory(User::class)->create(['status' => User::STATUS_ACTIVE]);
@@ -109,5 +96,12 @@ class RegisterTest extends TestCase
             ->assertStatus(302)
             ->assertRedirect('/login')
             ->assertSessionHas('success', 'Your e-mail is verified. You can now login.');
+    }
+    
+    public function testBasicTest()
+    {
+        $response = $this->get(route('home'));
+
+        $response->assertStatus(200);
     }
 }

@@ -48,7 +48,7 @@
                 @if ($user->isAdmin())
                     <span class="badge badge-danger">Admin</span>
                 @else
-                    <span class="badge badge-secondary">User</span>
+                    <span class="badge badge-secondary">{{ $user->role }}</span>
                 @endif
             </td>
         </tr>

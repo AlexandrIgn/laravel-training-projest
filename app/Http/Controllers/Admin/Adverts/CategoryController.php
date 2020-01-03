@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\Adverts;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Category;
-use App\Attribute;
+use  App\Entity\Adverts\Category;
+use App\Entity\Adverts\Attribute;
 
 class CategoryController extends Controller
 {

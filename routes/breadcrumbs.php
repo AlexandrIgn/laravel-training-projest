@@ -2,8 +2,8 @@
 
 use App\User;
 use App\Region;
-use App\Category;
-use App\Attribute;
+use App\Entity\Adverts\Category;
+use App\Entity\Adverts\Attribute;
 
 Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('home'));
@@ -116,15 +116,21 @@ Breadcrumbs::register('admin.adverts.categories.attributes.create', function ($t
     $trail->push('Create', route('admin.adverts.categories.attributes.create', $category));
 });
 
-Breadcrumbs::register('admin.adverts.categories.attributes.show', function ($trail, Category $category, Attribute $attribute) {
-    $trail->parent('admin.adverts.categories.show', $category);
-    $trail->push($attribute->name, route('admin.adverts.categories.attributes.show', [$category, $attribute]));
-});
+Breadcrumbs::register(
+    'admin.adverts.categories.attributes.show',
+    function ($trail, Category $category, Attribute $attribute) {
+        $trail->parent('admin.adverts.categories.show', $category);
+        $trail->push($attribute->name, route('admin.adverts.categories.attributes.show', [$category, $attribute]));
+    }
+);
 
-Breadcrumbs::register('admin.adverts.categories.attributes.edit', function ($trail, Category $category, Attribute $attribute) {
-    $trail->parent('admin.adverts.categories.attributes.show', $category, $attribute);
-    $trail->push('Edit', route('admin.adverts.categories.attributes.edit', [$category, $attribute]));
-});
+Breadcrumbs::register(
+    'admin.adverts.categories.attributes.edit',
+    function ($trail, Category $category, Attribute $attribute) {
+        $trail->parent('admin.adverts.categories.attributes.show', $category, $attribute);
+        $trail->push('Edit', route('admin.adverts.categories.attributes.edit', [$category, $attribute]));
+    }
+);
 
 // Cabinet
 
@@ -146,4 +152,26 @@ Breadcrumbs::register('cabinet.profile.edit', function ($trail) {
 Breadcrumbs::register('cabinet.profile.phone', function ($trail) {
     $trail->parent('cabinet.profile.home');
     $trail->push('Phone', route('cabinet.profile.phone'));
+});
+
+// Cabinet Adverts
+
+Breadcrumbs::register('cabinet.adverts.index', function ($trail) {
+    $trail->parent('cabinet.home');
+    $trail->push('Adverts', route('cabinet.adverts.index'));
+});
+
+Breadcrumbs::register('cabinet.adverts.create', function ($trail) {
+    $trail->parent('cabinet.adverts.index');
+    $trail->push('Create', route('cabinet.adverts.create'));
+});
+
+Breadcrumbs::register('cabinet.adverts.create.region', function ($trail, Category $category, Region $region = null) {
+    $trail->parent('cabinet.adverts.create');
+    $trail->push($category->name, route('cabinet.adverts.create.region', [$category, $region]));
+});
+
+Breadcrumbs::register('cabinet.adverts.create.advert', function ($trail, Category $category, Region $region = null) {
+    $trail->parent('cabinet.adverts.create.region', $category, $region);
+    $trail->push($region ? $region->name : 'All', route('cabinet.adverts.create.advert', [$category, $region]));
 });

@@ -64,5 +64,4 @@ class RegisterController extends Controller
         return redirect()->route('login')
             ->with('success', 'Check your email and click on the link to verify.');
     }
-
 }

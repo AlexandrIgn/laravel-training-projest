@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Adverts;
 
-use App\Attribute;
-use App\Category;
+use App\Entity\Adverts\Category;
+use App\Entity\Adverts\Attribute;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;

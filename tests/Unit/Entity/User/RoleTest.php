@@ -29,5 +29,5 @@ class RoleTest extends TestCase
         $this->expectExceptionMessage('Role is already assigned.');
 
         $user->changeRole(User::ROLE_ADMIN);
-      }
+    }
 }
