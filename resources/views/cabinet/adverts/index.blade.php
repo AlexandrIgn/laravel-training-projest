@@ -2,6 +2,7 @@
 
 @section('content')
     @include('cabinet.adverts._nav')
+    <p> <a href="{{ route('cabinet.adverts.create') }}" class="btn btn-success">Add Advert</a></p>
 
     <table class="table table-striped">
         <thead>

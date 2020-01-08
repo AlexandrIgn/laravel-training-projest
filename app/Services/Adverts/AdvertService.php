@@ -51,7 +51,7 @@ class AdvertService
             return $advert;
         });
     }
-/*
+
     public function addPhotos($id, PhotosRequest $request): void
     {
         $advert = $this->getAdvert($id);
@@ -65,7 +65,7 @@ class AdvertService
             $advert->update();
         });
     }
-
+/*
     public function edit($id, EditRequest $request): void
     {
         $advert = $this->getAdvert($id);
@@ -75,7 +75,7 @@ class AdvertService
             'price',
             'address',
         ]));
-    }
+    }*/
 
     public function sendToModeration($id): void
     {
@@ -96,7 +96,7 @@ class AdvertService
         $advert->reject($request['reason']);
     }
 
-    public function editAttributes($id, AttributesRequest $request): void
+     public function editAttributes($id, AttributesRequest $request): void
     {
         $advert = $this->getAdvert($id);
 
@@ -114,7 +114,7 @@ class AdvertService
             $advert->update();
         });
     }
-
+/*
     public function expire(Advert $advert): void
     {
         $advert->expire();
@@ -125,7 +125,7 @@ class AdvertService
         $advert = $this->getAdvert($id);
         $advert->close();
     }
-
+*/
     public function remove($id): void
     {
         $advert = $this->getAdvert($id);
@@ -135,5 +135,5 @@ class AdvertService
     private function getAdvert($id): Advert
     {
         return Advert::findOrFail($id);
-    }*/
+    }
 }

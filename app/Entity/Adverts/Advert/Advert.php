@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Entity\Adverts\Category;
 use App\Region;
 use App\User;
+use Carbon\Carbon;
 
 class Advert extends Model
 {
@@ -33,6 +34,37 @@ class Advert extends Model
             self::STATUS_ACTIVE => 'Active',
             self::STATUS_CLOSED => 'Closed',
         ];
+    }
+
+    public function sendToModeration(): void
+    {
+        if (!$this->isDraft()) {
+            throw new \DomainException('Advert is not draft.');
+        }
+        if (!\count($this->photos)) {
+            throw new \DomainException('Upload photos.');
+        }
+        $this->update([
+            'status' => self::STATUS_MODERATION,
+        ]);
+    }
+
+    public function reject($reason): void
+    {
+        $this->update([
+            'status' => self::STATUS_DRAFT,
+            'reject_reason' => $reason,
+        ]);
+    }
+
+    public function getValue($id)
+    {
+        foreach ($this->values as $value) {
+            if ($value->attribute_id === $id) {
+                return $value->value;
+            }
+        }
+        return null;
     }
 
     public function isDraft(): bool
@@ -80,8 +112,31 @@ class Advert extends Model
         return $this->hasMany(Photo::class, 'advert_id', 'id');
     }
 
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
     public function scopeForUser(Builder $query, User $user)
     {
         return $query->where('user_id', $user->id);
+    }
+
+    public function scopeForCategory(Builder $query, Category $category)
+    {
+        return $query->whereIn('category_id', array_merge(
+            [$category->id],
+            $category->descendants()->pluck('id')->toArray()
+        ));
+    }
+
+    public function scopeForRegion(Builder $query, Region $region)
+    {
+        $ids = [$region->id];
+        $childrenIds = $ids;
+        while ($childrenIds = Region::where(['parent_id' => $childrenIds])->pluck('id')->toArray()) {
+            $ids = array_merge($ids, $childrenIds);
+        }
+        return $query->whereIn('region_id', $ids);
     }
 }

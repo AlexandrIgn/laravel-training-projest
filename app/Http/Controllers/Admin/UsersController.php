@@ -28,7 +28,7 @@ class UsersController extends Controller
         $query = User::orderByDesc('id');
 
         if (!empty($value = $request->get('id'))) {
-            $query->where('id', $value)->dump();
+            $query->where('id', $value);
         }
 
         if (!empty($value = $request->get('name'))) {
